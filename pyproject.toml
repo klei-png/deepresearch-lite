@@ -2,4 +2,19 @@
 name = "deepresearch-lite"
 version = "0.1.0"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "langchain>=1.0",
+    "langgraph>=1.0",
+    "langchain-openai>=0.3",
+    "langchain-community>=0.4",
+    "langchain-text-splitters>=0.3",
+    "langgraph-checkpoint-sqlite>=2.0",
+    "python-dotenv>=1.0",
+    "pydantic>=2.7",
+    "duckduckgo-search>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+multiagent = ["langgraph-supervisor>=0.0.20", "langgraph-swarm>=0.0.10"]
+serve = ["fastapi>=0.115", "uvicorn>=0.30"]
