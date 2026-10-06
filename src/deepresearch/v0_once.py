@@ -1,10 +1,8 @@
-from itertools import chain
-
 from langchain_core.prompts import ChatPromptTemplate
 from .configuration import Configuration
 from .models import model_for
 from .prompts import REPORT_SYSTEM,REPORT_USER
-from schemas import Report
+from .schemas import Report
 
 def run(topic: str,config: dict|None = None) -> Report:
     cfg = Configuration.from_runnable_config(config)
@@ -18,9 +16,9 @@ def run(topic: str,config: dict|None = None) -> Report:
 
     return chain.invoke({
         "topic": topic,
-        "n_sections": cfg.max_sections(),
+        "n_sections": cfg.max_sections,
         "audience": "技术决策者",
-        "extra": "重点关注2025年后的进展",
+        "extra": "重点关注2026年后的进展",
     })
 
 def run_stream(topic: str,config: dict|None = None):

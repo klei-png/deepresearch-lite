@@ -1,19 +1,19 @@
 import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass, fields
 from typing import get_type_hints
 
 from langchain_core.runnables import RunnableConfig,ensure_config
-from numpy.distutils.misc_util import Configuration
+
 
 
 @dataclass(kw_only=True)
 class Configuration:
     """全部可调参数。优先级：configurable > 环境变量 > 默认值"""
-    planner_model: str = "glm-4.7-flash"
-    research_model: str = "glm-4.7-flash"
-    writer_model: str = "glm-4.7-flash"
-    reviewer_model: str = "glm-4.7-flash"
-    compression_model: str = "glm-4.7-flash"
+    planner_model: str = "qwen3.8-max"
+    research_model: str = "qwen3.8-max"
+    writer_model: str = "qwen3.8-max"
+    reviewer_model: str = "qwen3.8-max"
+    compression_model: str = "qwen3.8-max"
 
     #----行为参数----
     max_sections: int = 5   #最多报告几节
@@ -28,7 +28,7 @@ class Configuration:
         configurable = cfg.get("configurable",{})
         hints = get_type_hints(cls)
         values:dict = {}
-        for f in field(cls):
+        for f in fields(cls):
             if f.name in configurable and configurable[f.name] is not None:
                 raw = configurable[f.name]
             elif os.environ.get(f.name.upper()):
