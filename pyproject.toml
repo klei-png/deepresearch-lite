@@ -12,6 +12,8 @@ dependencies = [
     "python-dotenv>=1.0",
     "pydantic>=2.7",
     "duckduckgo-search>=6.0",
+    "ddgs>=9.16.0",
+    "bs4>=0.0.2",
 ]
 
 [project.optional-dependencies]

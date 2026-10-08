@@ -18,6 +18,7 @@ def get_model(role: str, model_string: str, temperature: float = 0.0) -> BaseCha
         temperature=temperature,
         timeout=180,
         max_retries=2,
+        extra_body={"enable_thinking":False}
     )
 
 def model_for(role: str, config: RunnableConfig | None = None, **kwargs) -> BaseChatModel:
