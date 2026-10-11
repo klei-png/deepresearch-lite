@@ -2,9 +2,9 @@ from langchain_core.runnables import RunnableConfig
 
 from ..configuration import Configuration
 from ..models import model_for
-from ..prompts import WRITE_SYSTEM,REVIEW_SYSTEM
+from ..prompts import WRITE_SYSTEM
 from ..schemas import Report
-from ..state import ReportState,ReviewResult
+from ..state import ReportState
 
 def write_node(state: ReportState,config: RunnableConfig) -> dict:
     cfg = Configuration.from_runnable_config(config)
@@ -22,14 +22,7 @@ def write_node(state: ReportState,config: RunnableConfig) -> dict:
         )}
     ])
     return {"draft": _to_markdown(report),"final":report}
-def review_node(state:ReportState,config:RunnableConfig) -> dict:
-    model = model_for("reviewer",config).with_structured_output(ReviewResult)
-    res = model.invoke([
-        {"role":"system","content":REVIEW_SYSTEM},
-        {"role":"user","content":f"主题：{state['topic']}\n\n报告草稿：\n{state['draft'][:12000]}"},
-    ])
-    res.passed = res.score >= 8
-    return {"review": res,"revision_round":state["revision_round"]+1}
+
 
 def _to_markdown(r:Report) -> str:
     md = f"# {r.title}\n\n>{r.abstract}\n\n"

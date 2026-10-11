@@ -7,7 +7,7 @@ from ..models import model_for
 from ..state import ReportState
 from ..tools import web_search
 
-def research_nodes(state: ReportState,config: RunnableConfig) -> dict:
+def research_node(state: ReportState,config: RunnableConfig) -> dict:
     """按提纲逐节检索。v2 串行；v4改造为并行"""
     cfg = Configuration.from_runnable_config(config)
     extra = state.get("review").issues if state.get("review") else []
