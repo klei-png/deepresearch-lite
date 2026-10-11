@@ -32,8 +32,11 @@ def web_search(
                             "snippet":"..."}],ensure_ascii=False)
     if cfg.search_api == "tavily":
         return str(TavilySearchResults(query,max_results).invoke({"query":query}))
-    ddgs = DDGS(timeout=30)
-    hits = list(ddgs.text(query,max_results=max_results))
+    try:
+        ddgs = DDGS(timeout=30,proxy="http://127.0.0.1:7897")
+        hits = list(ddgs.text(query,max_results=max_results))
+    except Exception as e:
+        return json.dumps([],ensure_ascii=False)
     return json.dumps(
         [{"title": h["title"], "url": h["href"], "snippet": h["body"]} for h in hits],
         ensure_ascii=False,

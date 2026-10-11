@@ -41,3 +41,12 @@ def build_graph(checkpointer=None,store=None):
     return builder.compile(checkpointer=checkpointer or InMemorySaver(),store=store)
 #模块级单例：被 LangGraph Server / FastAPI 直接引用（第 11、13 章）
 graph = build_graph()
+
+if __name__=="__main__":
+    cfg = {"configurable":{"thread_id":"v2_demo"},"recursion_limit":50}
+    for step in graph.stream({"topic":"Who is stronger, Satoru Gojo or Sukuna?","message":[]},config=cfg,stream_mode="updates"):
+        for node, delta in step.items():
+            if node == "review":
+                r = delta["review"]
+                print(f"评审：score={r.score} passed={r.passed} 轮次={delta.get('revision_round')}")
+                print(" 问题：",r.issues[:3])

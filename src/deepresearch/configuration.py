@@ -18,7 +18,8 @@ class Configuration:
     #----行为参数----
     max_sections: int = 5   #最多报告几节
     max_queries_per_section: int = 3
-    max_search_results: int = 2
+    max_search_results: int = 5
+    max_revision_rounds: int = 2
     search_api: str = "duckduckgo"
     enable_hitl: bool = True    #大纲是否人工审批
 
