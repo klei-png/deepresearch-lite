@@ -7,7 +7,7 @@ from .nodes.plan import plan_node
 from .nodes.research import research_node
 from .nodes.review import review_node
 from .nodes.write import write_node
-
+from .nodes.publish import publish_node
 from .state import ReportState
 
 def route_after_review(state:ReportState,config:RunnableConfig) -> str:
@@ -26,11 +26,14 @@ def build_graph(checkpointer=None,store=None):
     builder.add_node("research",research_node)
     builder.add_node("write",write_node)
     builder.add_node("review",review_node)
+    builder.add_node("publish",publish_node)
 
     builder.add_edge(START,"plan")
     builder.add_edge("plan","research")
     builder.add_edge("research","write")
     builder.add_edge("write","review")
+    builder.add_edge("review","publish")
+    builder.add_edge("publish",END)
 
     builder.add_conditional_edges(
         "review",
