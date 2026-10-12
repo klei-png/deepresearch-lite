@@ -15,6 +15,7 @@ dependencies = [
     "ddgs>=9.16.0",
     "bs4>=0.0.2",
     "grandalf>=0.8",
+    "langgraph-checkpoint-postgres>=3.1.2",
 ]
 
 [project.optional-dependencies]

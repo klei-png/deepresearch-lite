@@ -1,6 +1,13 @@
+import os
+import sqlite3
 from langgraph.checkpoint.memory import InMemorySaver
 from langgraph.graph import END, START, StateGraph
 from langchain_core.runnables import RunnableConfig
+
+from langgraph.checkpoint.postgres import PostgresSaver
+from langgraph.checkpoint.sqlite import SqliteSaver
+from langgraph.store.memory import InMemoryStore
+
 
 from .configuration import Configuration
 from .nodes.plan import plan_node
@@ -19,6 +26,13 @@ def route_after_review(state:ReportState,config:RunnableConfig) -> str:
     if review.passed or state["revision_round"] >= cfg.max_revision_rounds:
         return "finish"
     return "revise"
+
+def make_checkpointer(env: str = "dev"):
+    if env == "prod":
+        cp = PostgresSaver.from_conn_string(os.environ["DATABASE_URL"])
+        cp.setup()
+        return cp
+    return SqliteSaver.from_conn_string("storage/graph.db")
 
 def build_graph(checkpointer=None,store=None):
     builder = StateGraph(ReportState)
@@ -43,7 +57,12 @@ def build_graph(checkpointer=None,store=None):
 
     return builder.compile(checkpointer=checkpointer or InMemorySaver(),store=store)
 #模块级单例：被 LangGraph Server / FastAPI 直接引用（第 11、13 章）
-graph = build_graph()
+graph = build_graph(
+    checkpointer=SqliteSaver.from_conn_string("storage/graph.db"),
+    store=InMemoryStore()
+)
+
+
 
 if __name__=="__main__":
     cfg = {"configurable":{"thread_id":"v2_demo"},"recursion_limit":50}
