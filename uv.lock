@@ -425,6 +425,8 @@ dependencies = [
     { name = "langgraph" },
     { name = "langgraph-checkpoint-postgres" },
     { name = "langgraph-checkpoint-sqlite" },
+    { name = "langgraph-supervisor" },
+    { name = "langgraph-swarm" },
     { name = "pydantic" },
     { name = "python-dotenv" },
 ]
@@ -457,7 +459,9 @@ requires-dist = [
     { name = "langgraph", specifier = ">=1.0" },
     { name = "langgraph-checkpoint-postgres", specifier = ">=3.1.2" },
     { name = "langgraph-checkpoint-sqlite", specifier = ">=2.0" },
+    { name = "langgraph-supervisor", specifier = ">=0.0.31" },
     { name = "langgraph-supervisor", marker = "extra == 'multiagent'", specifier = ">=0.0.20" },
+    { name = "langgraph-swarm", specifier = ">=0.1.0" },
     { name = "langgraph-swarm", marker = "extra == 'multiagent'", specifier = ">=0.0.10" },
     { name = "pydantic", specifier = ">=2.7" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.0" },

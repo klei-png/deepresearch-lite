@@ -9,11 +9,11 @@ from langchain_core.runnables import RunnableConfig,ensure_config
 @dataclass(kw_only=True)
 class Configuration:
     """全部可调参数。优先级：configurable > 环境变量 > 默认值"""
-    planner_model: str = "qwen3.8-max"
-    research_model: str = "qwen3.8-max"
-    writer_model: str = "qwen3.8-max"
-    reviewer_model: str = "qwen3.8-max"
-    compression_model: str = "qwen3.8-max"
+    planner_model: str = "kimi-k3"
+    research_model: str = "kimi-k3"
+    writer_model: str = "kimi-k3"
+    reviewer_model: str = "kimi-k3"
+    compression_model: str = "kimi-k3"
 
     #----行为参数----
     max_sections: int = 5   #最多报告几节
