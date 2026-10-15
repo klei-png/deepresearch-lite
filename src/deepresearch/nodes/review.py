@@ -24,4 +24,4 @@ def review_node(state:ReportState,config:RunnableConfig) -> Command:
             #次数用尽仍未达标：也要让它可追溯——把遗留问题写进报告
             res.issues = res.issues + ["已达最大修订轮次，以下问题未解决："] + res.issues[:3]
         return Command(update={"review":res,"revision_round":rounds},goto="__end__")
-    return Command(update={"review":res,"revision_round":rounds},goto="research")
+    return Command(update={"review":res,"revision_round":rounds},goto="fanout")

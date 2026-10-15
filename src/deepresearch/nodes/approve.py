@@ -12,7 +12,7 @@ def approve_plan_node(state: ReportState) -> Command:
 
     if decision.get("action") == "edit":
         new_plan = [SectionPlan(**s) for s in decision["plan"]]
-        return Command(update={"plan":new_plan},goto="research")
+        return Command(update={"plan":new_plan},goto="fanout")
     if decision.get("action") == "reject":
         return Command(update={"plan":[]},goto="__end__")
-    return Command(goto="research")
+    return Command(goto="fanout")

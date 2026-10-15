@@ -20,7 +20,7 @@ class Configuration:
     max_queries_per_section: int = 3
     max_search_results: int = 5
     max_revision_rounds: int = 2
-    search_api: str = "duckduckgo"
+    search_api: str = "mock"
     enable_hitl: bool = True    #大纲是否人工审批
 
     @classmethod
